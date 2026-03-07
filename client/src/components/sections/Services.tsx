@@ -44,33 +44,33 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="py-24 bg-white">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+    <section id="services" className="py-16 md:py-24 bg-white overflow-hidden">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
         
-        <div className="flex flex-col lg:flex-row gap-12 lg:items-end justify-between mb-16">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 lg:items-end justify-between mb-12 md:mb-16">
           <div className="max-w-2xl">
-            <h2 className="text-primary font-bold tracking-wider uppercase text-sm mb-3">Our Services</h2>
-            <h3 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+            <h2 className="text-primary font-bold tracking-wider uppercase text-xs sm:text-sm mb-2 md:mb-3">Our Services</h2>
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
               Comprehensive Dental Treatments
             </h3>
           </div>
-          <p className="text-muted-foreground max-w-lg lg:text-right border-l-4 lg:border-l-0 lg:border-r-4 border-primary pl-4 lg:pl-0 lg:pr-4">
+          <p className="text-muted-foreground max-w-lg text-sm md:text-base lg:text-right border-l-4 lg:border-l-0 lg:border-r-4 border-primary pl-4 lg:pl-0 lg:pr-4">
             We provide a wide array of dental services under one roof. Our state-of-the-art facility ensures you receive the best care possible.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
           
           {/* Services Grid */}
-          <div className="lg:col-span-2 grid sm:grid-cols-2 gap-6">
+          <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
             {services.map((item, idx) => (
-              <Card key={idx} className="group border border-border/50 hover:border-primary/50 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
-                <CardContent className="p-8 relative">
-                  <div className="w-14 h-14 rounded-xl bg-secondary text-primary flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+              <Card key={idx} className="group border border-border/50 hover:border-primary/50 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden h-full">
+                <CardContent className="p-6 md:p-8 relative flex flex-col h-full">
+                  <div className="w-12 md:w-14 h-12 md:h-14 rounded-lg md:rounded-xl bg-secondary text-primary flex items-center justify-center mb-4 md:mb-6 shrink-0 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
                     {item.icon}
                   </div>
-                  <h4 className="text-xl font-bold mb-3 text-foreground">{item.title}</h4>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
+                  <h4 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-foreground">{item.title}</h4>
+                  <p className="text-muted-foreground text-xs md:text-sm leading-relaxed flex-1">{item.desc}</p>
                   
                   {/* Decorative background shape */}
                   <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-colors" />
@@ -80,8 +80,8 @@ export default function Services() {
           </div>
 
           {/* Featured Image Column */}
-          <div className="lg:col-span-1 relative h-full min-h-[400px]">
-            <div className="absolute inset-0 rounded-[2rem] overflow-hidden shadow-2xl">
+          <div className="lg:col-span-1 relative h-full min-h-[300px] md:min-h-[400px]">
+            <div className="absolute inset-0 rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl">
               <img 
                 src={servicesImg} 
                 alt="Dental Treatments" 

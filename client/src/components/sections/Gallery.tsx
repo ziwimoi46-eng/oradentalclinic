@@ -12,23 +12,23 @@ export default function Gallery() {
   ];
 
   return (
-    <section id="gallery" className="py-24 bg-slate-900 text-white">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+    <section id="gallery" className="py-16 md:py-24 bg-slate-900 text-white overflow-hidden">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
         
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-primary font-bold tracking-wider uppercase text-sm mb-3">Clinic Tour</h2>
-          <h3 className="text-4xl md:text-5xl font-bold mb-6">Our Premium Facility</h3>
-          <p className="text-slate-400 text-lg leading-relaxed">
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+          <h2 className="text-primary font-bold tracking-wider uppercase text-xs sm:text-sm mb-2 md:mb-3">Clinic Tour</h2>
+          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Our Premium Facility</h3>
+          <p className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed">
             Take a look inside our modern, hygienic, and welcoming dental clinic designed entirely around patient comfort.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           {images.map((img, idx) => (
             <div 
               key={idx} 
-              className={`group relative overflow-hidden rounded-2xl aspect-square shadow-lg ${
-                idx === 0 || idx === 3 ? 'lg:col-span-2 aspect-[2/1] lg:aspect-auto' : ''
+              className={`group relative overflow-hidden rounded-xl md:rounded-2xl aspect-square shadow-lg ${
+                idx === 0 || idx === 3 ? 'sm:col-span-2 md:col-span-2 lg:col-span-2 aspect-video md:aspect-auto' : ''
               }`}
             >
               <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity z-10 duration-300 mix-blend-multiply" />

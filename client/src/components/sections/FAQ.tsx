@@ -31,25 +31,25 @@ export default function FAQ() {
   ];
 
   return (
-    <section id="faq" className="py-24 bg-secondary/30">
+    <section id="faq" className="py-16 md:py-24 bg-secondary/30 overflow-hidden">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-4xl">
         
-        <div className="flex flex-col items-center text-center mb-12">
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 text-primary">
-            <HelpCircle className="w-8 h-8" />
+        <div className="flex flex-col items-center text-center mb-10 md:mb-12">
+          <div className="w-12 md:w-16 h-12 md:h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 md:mb-6 text-primary">
+            <HelpCircle className="w-6 md:w-8 h-6 md:h-8" />
           </div>
-          <h2 className="text-primary font-bold tracking-wider uppercase text-sm mb-3">Questions & Answers</h2>
-          <h3 className="text-3xl md:text-4xl font-bold text-foreground">Common Dental Questions</h3>
+          <h2 className="text-primary font-bold tracking-wider uppercase text-xs sm:text-sm mb-2 md:mb-3">Questions & Answers</h2>
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">Common Dental Questions</h3>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl shadow-primary/5 p-6 md:p-10 border border-border/50">
+        <div className="bg-white rounded-xl md:rounded-2xl shadow-xl shadow-primary/5 p-5 md:p-8 lg:p-10 border border-border/50 overflow-hidden">
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, idx) => (
               <AccordionItem key={idx} value={`item-${idx}`} className="border-border/60">
-                <AccordionTrigger className="text-left text-lg font-semibold hover:text-primary transition-colors py-4">
+                <AccordionTrigger className="text-left text-sm md:text-lg font-semibold hover:text-primary transition-colors py-3 md:py-4">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed text-base pb-6">
+                <AccordionContent className="text-muted-foreground leading-relaxed text-xs md:text-base pb-4 md:pb-6">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
