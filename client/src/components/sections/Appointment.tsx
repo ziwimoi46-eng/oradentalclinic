@@ -1,8 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MessageCircle, Phone, Mail, MapPin, Send, Loader2 } from "lucide-react";
-import { useSubmitContact } from "@/hooks/use-contact";
-import { insertContactMessageSchema, type InsertContactMessage } from "@shared/schema";
+import { z } from "zod";
+import { MessageCircle, Phone, Mail, Send } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,11 +15,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function Appointment() {
-  const { mutate, isPending } = useSubmitContact();
+const appointmentSchema = z.object({
+  name: z.string().min(2, "Please enter your name"),
+  phone: z.string().min(7, "Please enter a valid phone number"),
+  email: z.string().email("Please enter a valid email").or(z.literal("")),
+  message: z.string().min(5, "Please describe your request briefly"),
+});
 
-  const form = useForm<InsertContactMessage>({
-    resolver: zodResolver(insertContactMessageSchema),
+type AppointmentValues = z.infer<typeof appointmentSchema>;
+
+const WHATSAPP_NUMBER = "919405717515";
+
+export default function Appointment() {
+  const form = useForm<AppointmentValues>({
+    resolver: zodResolver(appointmentSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -29,12 +37,16 @@ export default function Appointment() {
     },
   });
 
-  function onSubmit(values: InsertContactMessage) {
-    mutate(values, {
-      onSuccess: () => {
-        form.reset();
-      }
-    });
+  function onSubmit(values: AppointmentValues) {
+    const text =
+      `Hello Oracare Dental Clinic,%0A%0A` +
+      `*Name:* ${encodeURIComponent(values.name)}%0A` +
+      `*Phone:* ${encodeURIComponent(values.phone)}%0A` +
+      (values.email ? `*Email:* ${encodeURIComponent(values.email)}%0A` : ``) +
+      `*Message:* ${encodeURIComponent(values.message)}`;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    form.reset();
   }
 
   return (
@@ -81,7 +93,7 @@ export default function Appointment() {
               <p className="text-sm md:text-base text-green-800/80 mb-4 md:mb-6">Message us directly on WhatsApp to book your slot instantly.</p>
               
               <a 
-                href="https://wa.me/919405717515" 
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank" 
                 rel="noreferrer"
                 className="inline-flex items-center justify-center gap-2 md:gap-3 px-5 md:px-8 py-3 md:py-4 bg-green-500 text-white rounded-lg md:rounded-xl font-bold hover:bg-green-600 transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 w-full sm:w-auto"
@@ -107,7 +119,7 @@ export default function Appointment() {
                     <FormItem>
                       <FormLabel className="text-xs md:text-sm text-foreground/80">Full Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="John Doe" className="h-10 md:h-12 text-sm md:text-base bg-secondary/20 focus-visible:ring-primary/20" {...field} />
+                        <Input data-testid="input-name" placeholder="John Doe" className="h-10 md:h-12 text-sm md:text-base bg-secondary/20 focus-visible:ring-primary/20" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -122,7 +134,7 @@ export default function Appointment() {
                       <FormItem>
                         <FormLabel className="text-xs md:text-sm text-foreground/80">Phone Number</FormLabel>
                         <FormControl>
-                          <Input placeholder="9876543210" className="h-10 md:h-12 text-sm md:text-base bg-secondary/20 focus-visible:ring-primary/20" {...field} />
+                          <Input data-testid="input-phone" placeholder="9876543210" className="h-10 md:h-12 text-sm md:text-base bg-secondary/20 focus-visible:ring-primary/20" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -135,7 +147,7 @@ export default function Appointment() {
                       <FormItem>
                         <FormLabel className="text-xs md:text-sm text-foreground/80">Email Address</FormLabel>
                         <FormControl>
-                          <Input placeholder="john@example.com" type="email" className="h-10 md:h-12 text-sm md:text-base bg-secondary/20 focus-visible:ring-primary/20" {...field} />
+                          <Input data-testid="input-email" placeholder="john@example.com" type="email" className="h-10 md:h-12 text-sm md:text-base bg-secondary/20 focus-visible:ring-primary/20" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -151,6 +163,7 @@ export default function Appointment() {
                       <FormLabel className="text-xs md:text-sm text-foreground/80">How can we help?</FormLabel>
                       <FormControl>
                         <Textarea 
+                          data-testid="input-message"
                           placeholder="Briefly describe your dental issue or preferred appointment date..." 
                           className="min-h-[100px] md:min-h-[120px] resize-y text-sm md:text-base bg-secondary/20 focus-visible:ring-primary/20" 
                           {...field} 
@@ -162,21 +175,12 @@ export default function Appointment() {
                 />
 
                 <Button 
-                  type="submit" 
-                  disabled={isPending} 
+                  type="submit"
+                  data-testid="button-submit-appointment"
                   className="w-full h-10 md:h-14 text-sm md:text-lg font-semibold rounded-lg md:rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
                 >
-                  {isPending ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="mr-2 h-5 w-5" />
-                      Submit Request
-                    </>
-                  )}
+                  <Send className="mr-2 h-5 w-5" />
+                  Send via WhatsApp
                 </Button>
                 
               </form>
